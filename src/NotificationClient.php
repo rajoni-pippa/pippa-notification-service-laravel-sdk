@@ -11,19 +11,7 @@ use Pippa\NotificationSdkLaravel\DTOs\TemplateMessage;
 use Pippa\NotificationSdkLaravel\Exceptions\NotificationException;
 use Pippa\NotificationSdkLaravel\Requests\SendMessageRequest;
 
-/**
- * NotificationClient — Laravel / Guzzle
- *
- * Requires guzzlehttp/guzzle and illuminate/support.
- * Auto-discovered by Laravel via NotificationServiceProvider.
- * Bind via DI or use the NotificationService facade.
- *
- * Usage (Facade):
- *   NotificationService::sendEmail('user@example.com', 'welcome_email', ['name' => 'Rahim']);
- *
- * Usage (DI):
- *   public function __construct(protected NotificationClient $notification) {}
- */
+
 class NotificationClient
 {
     protected string $baseUrl;
@@ -43,29 +31,13 @@ class NotificationClient
         $this->timeout = $timeout;
     }
 
-    // =========================================================
-    //  PUBLIC API  (Courier-style)
-    // =========================================================
 
-    /**
-     * Send a notification using full SendMessageRequest control.
-     *
-     * @throws NotificationException
-     */
     public function send(SendMessageRequest $request): NotificationResponse
     {
         return $this->post('/v1/notification/send', $request->toArray());
     }
 
-    // =========================================================
-    //  SHORTCUT HELPERS
-    // =========================================================
 
-    /**
-     * Send an email notification via template.
-     *
-     * @throws NotificationException
-     */
     public function sendEmail(
         string $email,
         string $template,
@@ -82,11 +54,6 @@ class NotificationClient
         ]));
     }
 
-    /**
-     * Send an SMS notification via template.
-     *
-     * @throws NotificationException
-     */
     public function sendSms(
         string $phone,
         string $template,
@@ -103,11 +70,6 @@ class NotificationClient
         ]));
     }
 
-    /**
-     * Send an in-app notification via template.
-     *
-     * @throws NotificationException
-     */
     public function sendInApp(
         string $userId,
         string $template,
@@ -124,12 +86,6 @@ class NotificationClient
         ]));
     }
 
-    /**
-     * Send to multiple recipients/channels at once.
-     *
-     * @param  Recipient[]  $recipients
-     * @throws NotificationException
-     */
     public function sendMulti(
         array $recipients,
         string $template,
@@ -146,13 +102,7 @@ class NotificationClient
         ]));
     }
 
-    // =========================================================
-    //  HTTP — Guzzle (required dependency)
-    // =========================================================
 
-    /**
-     * @throws NotificationException
-     */
     protected function post(string $endpoint, array $payload): NotificationResponse
     {
         try {
@@ -170,7 +120,6 @@ class NotificationClient
             $body = json_decode((string) $response->getBody(), true) ?? [];
 
             return NotificationResponse::fromArray($body, $statusCode);
-
         } catch (ClientException $e) {
             $statusCode = $e->getResponse()->getStatusCode();
             $body = json_decode((string) $e->getResponse()->getBody(), true) ?? [];
@@ -178,7 +127,6 @@ class NotificationClient
             $errors = $body['errors'] ?? [];
 
             throw new NotificationException($message, $statusCode, $errors, $e);
-
         } catch (GuzzleException $e) {
             throw new NotificationException($e->getMessage(), $e->getCode(), [], $e);
         }

@@ -2,17 +2,7 @@
 
 namespace Pippa\NotificationSdkLaravel\DTOs;
 
-/**
- * Represents a template-based notification message.
- *
- * Usage (mirrors Courier SDK style):
- *
- *   new TemplateMessage([
- *       'to'       => [Recipient::email('user@example.com')],
- *       'template' => 'welcome_email',
- *       'data'     => ['name' => 'Rahim'],
- *   ])
- */
+
 class TemplateMessage
 {
     /** @var Recipient[] */
@@ -27,7 +17,6 @@ class TemplateMessage
 
     public function __construct(array $params)
     {
-        // 'to' can be a single Recipient or an array of Recipients
         $to = $params['to'] ?? [];
         $this->to = is_array($to) ? $to : [$to];
 

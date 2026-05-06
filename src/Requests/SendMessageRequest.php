@@ -4,14 +4,7 @@ namespace Pippa\NotificationSdkLaravel\Requests;
 
 use Pippa\NotificationSdkLaravel\DTOs\TemplateMessage;
 
-/**
- * Top-level request wrapper — mirrors Courier SDK style.
- *
- * Usage:
- *   new SendMessageRequest([
- *       'message' => new TemplateMessage([...])
- *   ])
- */
+
 class SendMessageRequest
 {
     public readonly TemplateMessage $message;
