@@ -132,6 +132,7 @@ class NotificationClient
         }
     }
 
+
     protected function buildHeaders(): array
     {
         return [
