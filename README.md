@@ -18,11 +18,13 @@ Laravel will auto-discover the service provider and facade.
 ## Configuration
 
 Publish config:
+
 ```bash
 php artisan vendor:publish --tag=notification-config
 ```
 
 Add to `.env`:
+
 ```env
 NOTIFICATION_API_KEY=your_api_key
 NOTIFICATION_SECRET_KEY=your_secret_key
@@ -124,9 +126,9 @@ use Pippa\NotificationSdkLaravel\Exceptions\NotificationException;
 try {
     NotificationService::sendEmail('user@example.com', 'my_template');
 } catch (NotificationException $e) {
-    $e->getMessage(); 
-    $e->getCode();  
-    $e->getErrors(); 
+    $e->getMessage();
+    $e->getCode();
+    $e->getErrors();
 }
 ```
 
@@ -134,12 +136,12 @@ try {
 
 ## Available Methods
 
-| Method | Description |
-|---|---|
-| `send(SendMessageRequest)` | Full control|
-| `sendEmail($email, $template, $data)` | Send email via template |
-| `sendSms($phone, $template, $data)` | Send SMS via template |
-| `sendInApp($userId, $template, $data)` | Send in-app notification |
+| Method                                       | Description                    |
+| -------------------------------------------- | ------------------------------ |
+| `send(SendMessageRequest)`                   | Full control                   |
+| `sendEmail($email, $template, $data)`        | Send email via template        |
+| `sendSms($phone, $template, $data)`          | Send SMS via template          |
+| `sendInApp($userId, $template, $data)`       | Send in-app notification       |
 | `sendMulti($recipients[], $template, $data)` | Multi-channel, multi-recipient |
 
 ---
