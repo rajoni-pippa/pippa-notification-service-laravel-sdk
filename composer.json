@@ -1,6 +1,5 @@
 {
   "name": "pippa/notification-sdk-laravel",
-  "version": "1.0.0",
   "description": "Notification Service SDK for Laravel — Guzzle, ServiceProvider, Facade",
   "type": "library",
   "license": "MIT",
