@@ -10,7 +10,7 @@ return [
     | Example: https://notification.yourcompany.com
     |
     */
-    'base_url' => env('NOTIFICATION_SERVICE_URL', 'https://pippasync-notification-service.test/api'),
+    'base_url' => env('NOTIFICATION_SERVICE_URL', 'https://naas.api.pippasync.com/api'),
 
     /*
     |--------------------------------------------------------------------------
