@@ -51,6 +51,20 @@ $response = NotificationService::sendSms(
     data:     ['otp' => '1234']
 );
 
+// Send WhatsApp
+$response = NotificationService::sendWhatsapp(
+    whatsapp: '+8801700000000',
+    template: 'whatsapp_template',
+    data:     ['name' => 'Rahim']
+);
+
+// Send Push Notification
+$response = NotificationService::sendPush(
+    userId:   'user_123',
+    template: 'push_template',
+    data:     ['title' => 'Hello!', 'body' => 'You have a new message.']
+);
+
 // Send In-App
 $response = NotificationService::sendInApp(
     userId:   'user_123',
@@ -74,6 +88,7 @@ $response = NotificationService::send(
                 Recipient::email('user@example.com'),
                 Recipient::phone('+8801700000000'),
                 Recipient::userId('user_123'),
+                Recipient::whatsapp('+8801747436390'),
             ],
             'template' => 'welcome_notification',
             'data'     => ['name' => 'Rahim'],
@@ -141,6 +156,8 @@ try {
 | `send(SendMessageRequest)`                   | Full control                   |
 | `sendEmail($email, $template, $data)`        | Send email via template        |
 | `sendSms($phone, $template, $data)`          | Send SMS via template          |
+| `sendWhatsapp($whatsapp, $template, $data)`  | Send WhatsApp via template     |
+| `sendPush($userId, $template, $data)`        | Send push notification         |
 | `sendInApp($userId, $template, $data)`       | Send in-app notification       |
 | `sendMulti($recipients[], $template, $data)` | Multi-channel, multi-recipient |
 
@@ -154,6 +171,7 @@ use Pippa\NotificationSdkLaravel\DTOs\Recipient;
 Recipient::email('user@example.com')
 Recipient::phone('+8801700000000')
 Recipient::userId('user_123')
+Recipient::whatsapp('+8801700000000')
 Recipient::make(['email' => '...', 'phone' => '...', 'user_id' => '...'])
 Recipient::make([...])->only(['email', 'sms'])
 ```

@@ -23,11 +23,20 @@ class Recipient
         return new static(['phone' => $phone]);
     }
 
+    public static function whatsapp(string $whatsapp): static
+    {
+        return new static(['whatsapp' => $whatsapp]);
+    }
+
     public static function userId(string $userId): static
     {
         return new static(['user_id' => $userId]);
     }
 
+    public static function push(string $push): static
+    {
+        return new static(['push' => $push]);
+    }
 
     public static function make(array $data): static
     {

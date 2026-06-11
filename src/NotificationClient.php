@@ -70,6 +70,39 @@ class NotificationClient
         ]));
     }
 
+    public function sendWhatsapp(
+        string $whatsapp,
+        string $template,
+        array $data = [],
+        array $extra = []
+    ): NotificationResponse {
+        return $this->send(new SendMessageRequest([
+            'message' => new TemplateMessage([
+                'to' => [Recipient::whatsapp($whatsapp)],
+                'template' => $template,
+                'data' => $data,
+                ...$extra,
+            ]),
+        ]));
+    }
+
+    public function sendPush(
+        string $push,
+        string $template,
+        array $data = [],
+        array $extra = []
+    ): NotificationResponse {
+        return $this->send(new SendMessageRequest([
+            'message' => new TemplateMessage([
+                'to' => [Recipient::push($push)],
+                'template' => $template,
+                'data' => $data,
+                ...$extra,
+            ]),
+        ]));
+    }
+
+
     public function sendInApp(
         string $userId,
         string $template,
@@ -125,6 +158,11 @@ class NotificationClient
             $body = json_decode((string) $e->getResponse()->getBody(), true) ?? [];
             $message = $body['message'] ?? $e->getMessage();
             $errors = $body['errors'] ?? [];
+
+            // ✅ Convert string errors to array
+            if (is_string($errors)) {
+                $errors = !empty($errors) ? [$errors] : [];
+            }
 
             throw new NotificationException($message, $statusCode, $errors, $e);
         } catch (GuzzleException $e) {
