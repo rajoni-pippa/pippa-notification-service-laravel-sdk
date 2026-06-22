@@ -60,7 +60,7 @@ $response = NotificationService::sendWhatsapp(
 
 // Send Push Notification
 $response = NotificationService::sendPush(
-    userId:   'user_123',
+    push:     'device_token_or_user_id',
     template: 'push_template',
     data:     ['title' => 'Hello!', 'body' => 'You have a new message.']
 );
@@ -70,6 +70,20 @@ $response = NotificationService::sendInApp(
     userId:   'user_123',
     template: 'order_update',
     data:     ['order_id' => 'ORD-456', 'status' => 'Shipped']
+);
+
+// Send Slack
+$response = NotificationService::sendSlack(
+    slack:    '#general',
+    template: 'slack_alert',
+    data:     ['message' => 'Deployment successful!']
+);
+
+// Send Discord
+$response = NotificationService::sendDiscord(
+    discord:  'channel_id_or_webhook',
+    template: 'discord_alert',
+    data:     ['message' => 'New order received!']
 );
 ```
 
@@ -89,6 +103,9 @@ $response = NotificationService::send(
                 Recipient::phone('+8801700000000'),
                 Recipient::userId('user_123'),
                 Recipient::whatsapp('+8801747436390'),
+                Recipient::push('device_token'),
+                Recipient::slack('#general'),
+                Recipient::discord('channel_id'),
             ],
             'template' => 'welcome_notification',
             'data'     => ['name' => 'Rahim'],
@@ -151,15 +168,17 @@ try {
 
 ## Available Methods
 
-| Method                                       | Description                    |
-| -------------------------------------------- | ------------------------------ |
-| `send(SendMessageRequest)`                   | Full control                   |
-| `sendEmail($email, $template, $data)`        | Send email via template        |
-| `sendSms($phone, $template, $data)`          | Send SMS via template          |
-| `sendWhatsapp($whatsapp, $template, $data)`  | Send WhatsApp via template     |
-| `sendPush($userId, $template, $data)`        | Send push notification         |
-| `sendInApp($userId, $template, $data)`       | Send in-app notification       |
-| `sendMulti($recipients[], $template, $data)` | Multi-channel, multi-recipient |
+| Method                                         | Description                       |
+| ---------------------------------------------- | --------------------------------- |
+| `send(SendMessageRequest)`                     | Full control over the request     |
+| `sendEmail($email, $template, $data)`          | Send email via template           |
+| `sendSms($phone, $template, $data)`            | Send SMS via template             |
+| `sendWhatsapp($whatsapp, $template, $data)`    | Send WhatsApp message             |
+| `sendPush($push, $template, $data)`            | Send push notification            |
+| `sendInApp($userId, $template, $data)`         | Send in-app notification          |
+| `sendSlack($slack, $template, $data)`          | Send Slack message                |
+| `sendDiscord($discord, $template, $data)`      | Send Discord message              |
+| `sendMulti($recipients[], $template, $data)`   | Multi-channel, multi-recipient    |
 
 ---
 
@@ -172,6 +191,9 @@ Recipient::email('user@example.com')
 Recipient::phone('+8801700000000')
 Recipient::userId('user_123')
 Recipient::whatsapp('+8801700000000')
+Recipient::push('device_token')
+Recipient::slack('#general')
+Recipient::discord('channel_id')
 Recipient::make(['email' => '...', 'phone' => '...', 'user_id' => '...'])
 Recipient::make([...])->only(['email', 'sms'])
 ```
