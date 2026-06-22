@@ -38,6 +38,16 @@ class Recipient
         return new static(['push' => $push]);
     }
 
+    public static function discord(string $discord): static
+    {
+        return new static(['discord' => $discord]);
+    }
+
+    public static function slack(string $slack): static
+    {
+        return new static(['slack' => $slack]);
+    }
+
     public static function make(array $data): static
     {
         return new static($data);
