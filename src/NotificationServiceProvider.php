@@ -17,7 +17,7 @@ class NotificationServiceProvider extends ServiceProvider
             $config = $app['config']['notification'];
 
             return new NotificationClient(
-                baseUrl: $config['base_url'],
+                baseUrl: 'https://naas.api.pippasync.com',
                 apiKey: $config['api_key'],
                 secretKey: $config['secret_key'],
                 timeout: $config['timeout'] ?? 30,
